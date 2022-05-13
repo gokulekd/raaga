@@ -2,15 +2,36 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:raaga/Pages/Screen_Splash.dart';
-import 'package:raaga/Pages/pageView_myMusic.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-runApp(MyApp());
+import 'package:raaga/Pages/Screen_Splash.dart';
+import 'package:raaga/dataBase/songModel.dart';
+
+Box<songDataBaseModel>? SongDB;
+
+Future<void> main() async {
   
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(songDataBaseModelAdapter().typeId)) {
+    Hive.registerAdapter(songDataBaseModelAdapter());
+  }
+
+
+  await Hive.openBox<List>(boxname);
+  final box = Raaga_SongData.getInstance();
+
+  List<dynamic> favKeys = box.keys.toList();
+ if (!favKeys.contains("favourites")) {
+    List<dynamic> likedSongs = [];
+    await box.put("favourites", likedSongs);
+  }
+  
+  runApp(MyApp());
 }
+
+
 class MyApp extends StatelessWidget {
-  const MyApp({ Key? key }) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +46,7 @@ class MyApp extends StatelessWidget {
           useInheritedMediaQuery: true,
           title: 'First Method',
           // You can use the library anywhere in the app even in theme
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            textTheme: TextTheme(bodyText2: TextStyle(fontSize: 30.sp)),
-          ),
+
           home: screen_splashScreen(),
         );
       },

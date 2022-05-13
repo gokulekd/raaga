@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:raaga/Widgets/PlayLists/createNewPlayList.dart';
+import 'package:raaga/Widgets/bottomsheet_playmusic/bottomsheet.dart';
 
 
 // ignore: camel_case_types
@@ -26,6 +28,52 @@ class _addToPlayListState extends State<addToPlayList>
         });
       },
       onTap: () {
+     showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ListTile(
+                            leading: new Icon(Icons.queue_music_outlined),
+                            title: new Text('Ever Green'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+
+
+                             ListTile(
+                            leading: new Icon(Icons.queue_music_outlined),
+                            title: new Text('Melody'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+
+
+                           ListTile(
+                            leading: new Icon(Icons.queue_music_outlined),
+                            title: new Text('A R Rahman Hits'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+
+                          ListTile(
+                            leading: new Icon(Icons.queue_music_outlined),
+                            title: new Text('Vijay Hits'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                     }
+     );
+
+
+     
         setState(() {
           isPressed2 = !isPressed2;
         });

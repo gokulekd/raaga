@@ -1,5 +1,7 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:raaga/Pages/pageView_Albums.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:raaga/Pages/SearchBar_Page.dart';
 import 'package:raaga/Pages/pageView_Favourite.dart';
 import 'package:raaga/Pages/pageView_myMusic.dart';
 import 'package:raaga/Pages/pageView_playlist.dart';
@@ -7,62 +9,83 @@ import 'package:raaga/Widgets/bottomsheet_playmusic/bottomsheet.dart';
 import 'package:raaga/Widgets/my%20music/drawer/drawer_Raaga.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({Key? key}) : super(key: key);
+  List<Audio> allSongNav;
+  BottomNavigation({Key? key, required this.allSongNav}) : super(key: key);
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  int _currentIndexState = 0;
+  final AssetsAudioPlayer assetAudioPlayer = AssetsAudioPlayer.withId("0");
+  final audioQuery = OnAudioQuery();
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(
+      () {
+        _selectedIndex = index;
+      },
+    );
+  }
 
-  // ignore: non_constant_identifier_names
-  final _Pages = [
-  Screen_MyMusic(),
-  //  pageView_Faourite(),
- pageView_Faourite(),
-    pageView_Albums(),
-    pageview_Playlist(),
-    
+  Audio find(List<Audio> source, String fromPath) {
+    return source.firstWhere((element) => element.path == fromPath);
+  }
 
-  ];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final _Pages = [
+      Screen_MyMusic(Fullsongs: widget.allSongNav),
+      pageView_Faourite(),
+      SearchBar_Page(),
+      pageview_Playlist(),
+    ];
     return Scaffold(
-
- 
-   drawer: drawer_Raaga(),
-      body: _Pages[_currentIndexState],
-     bottomSheet: bottomsheet_musicPlay(),
-      bottomNavigationBar: Theme(
-         data: Theme.of(context).copyWith(
-        // sets the background color of the `BottomNavigationBar`
-        canvasColor: Color.fromARGB(255, 198, 170, 204),
-        // sets the active color of the `BottomNavigationBar` if `Brightness` is light
       
-   
-            ), 
-        child: BottomNavigationBar(         // fixedColor: Colors.red,
-       
-            currentIndex: _currentIndexState,
+      drawer: drawer_Raaga(),
+      body: _Pages[_selectedIndex],
+      
+      
+      bottomSheet: bottomsheet_musicPlay(
+        Allsongs_bottomsheet: widget.allSongNav),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          // sets the background color of the `BottomNavigationBar`
+          canvasColor:Color.fromARGB(255, 47, 40, 101),
+          // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+        ),
+        child: BottomNavigationBar(
+            // fixedColor: Colors.red,
+
+            currentIndex: _selectedIndex,
             onTap: (newindex) {
               setState(() {
-                _currentIndexState = newindex;
+                _selectedIndex = newindex;
               });
             },
-            selectedItemColor:Color.fromARGB(255, 255, 255, 255),
-            unselectedItemColor:Color.fromARGB(255, 145, 90, 208),
+            elevation: 0,
+            selectedItemColor: Color.fromARGB(247, 206, 206, 255),
+            unselectedItemColor: Color.fromARGB(255, 126, 113, 145),
+            selectedFontSize: 16,
+          
             items: const [
               BottomNavigationBarItem(
                   icon: SizedBox(
-                    height: 35,
+                    height: 30,
                     child: Icon(
                       Icons.headphones_rounded,
                       size: 30,
                     ),
                   ),
-                  label: "MyMusic"),
+                  label: "MyMusic",
+           
+                  
+                  ),
                   
               BottomNavigationBarItem(
                   icon: Icon(
@@ -72,17 +95,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   label: "Favourite"),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.album,
+                    Icons.search,
                     size: 30,
                   ),
-                  label: "Albums"),
+                  label: "search"),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.queue_music_sharp,
                     size: 30,
                   ),
                   label: "playlist"),
-         
             ]),
       ),
     );

@@ -11,26 +11,46 @@ class _FavouriteButtonState extends State<FavouriteButton> {
   bool isPressed = true;
   bool isPressed2 = true;
   bool isHighlighted = true;
-
+      bool istapped = true;
+      final _globalKey = GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
     return  InkWell(
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         onHighlightChanged: (value) {
+          
           setState(() {
             isHighlighted = !isHighlighted;
           });
         },
         onTap: () {
+
+
+      var snackBar = SnackBar(
+        duration: Duration(seconds: 1),
+        content:istapped? Text('Added to Favourite'):Text("removed to Favourite")
+        );
+
+        
+             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+           
+           
+  
           setState(() {
+            istapped = !istapped;
+           
+ 
+      
+
             isPressed2 = !isPressed2;
           });
         },
         child: AnimatedContainer(
 
-          height: isHighlighted ? 30 : 25,
-          width: isHighlighted ? 30: 25,
+          height: isHighlighted ? 35 : 25,
+          width: isHighlighted ? 35: 25,
           curve: Curves.fastLinearToSlowEaseIn,
           duration: Duration(milliseconds: 300),
           decoration: BoxDecoration(

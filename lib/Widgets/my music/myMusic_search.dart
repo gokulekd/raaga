@@ -35,11 +35,11 @@ class _searchBar_MymusicState extends State<searchBar_Mymusic> {
 
     return Container(
       
-      height: 35,
+      height: 45,
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
-        color: Color.fromARGB(201, 227, 193, 215),
+        color: Color.fromARGB(248, 188, 168, 229),
         border: Border.all(color: Colors.black26),
       ),
       padding: const EdgeInsets.only(left: 10,top: 1),
@@ -47,7 +47,7 @@ class _searchBar_MymusicState extends State<searchBar_Mymusic> {
         textAlign: TextAlign.center,
         controller: controller,
         decoration: InputDecoration(
-          icon: Icon(Icons.search, color: style.color,size: 25,),
+          icon: Icon(Icons.search, color: style.color,size: 30,),
           suffixIcon: widget.text.isNotEmpty
               ? GestureDetector(
                   child: Icon(Icons.close, color: style.color),
@@ -61,7 +61,7 @@ class _searchBar_MymusicState extends State<searchBar_Mymusic> {
           hintText: widget.hintText,
           hintStyle:TextStyle(
             
-            fontSize: 15,
+            fontSize: 20,
           ),
           border: InputBorder.none,
         ),

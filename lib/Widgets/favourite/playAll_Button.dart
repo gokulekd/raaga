@@ -52,7 +52,7 @@ class _PlayAll_ButtonState extends State<PlayAll_Button>
                     offset: Offset(5, 10),
                   ),
                 ],
-                color: Color.fromARGB(255, 210, 189, 229),
+                color: Color.fromARGB(255, 95, 65, 131),
               ),
               child: Row(
                 children: [

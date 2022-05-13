@@ -1,8 +1,13 @@
+
+
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 
 // ignore: camel_case_types
 class shuffleSongs_musicPlayPage extends StatefulWidget {
-  const shuffleSongs_musicPlayPage({Key? key}) : super(key: key);
+  Function songlistArrange;
+ shuffleSongs_musicPlayPage({Key? key,required this.songlistArrange}) : super(key: key);
 
   @override
   _shuffleSongs_musicPlayPageState createState() => _shuffleSongs_musicPlayPageState();
@@ -10,13 +15,18 @@ class shuffleSongs_musicPlayPage extends StatefulWidget {
 
 class _shuffleSongs_musicPlayPageState extends State<shuffleSongs_musicPlayPage>
     with TickerProviderStateMixin {
+          final AssetsAudioPlayer assetAudioPlayer = AssetsAudioPlayer.withId("0");
   bool isPressed = true;
   bool isPressed2 = true;
   bool isHighlighted = true;
 
+  
+
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return 
+   
+                  InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       onHighlightChanged: (value) {
@@ -24,8 +34,17 @@ class _shuffleSongs_musicPlayPageState extends State<shuffleSongs_musicPlayPage>
           isHighlighted = !isHighlighted;
         });
       },
+      
       onTap: () {
+ 
         setState(() {
+
+           var snackBar = SnackBar(
+        duration: Duration(seconds: 1),
+        content:isPressed2? Text('Shuffled Song Play'):Text("Looped Song Play"));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+           
           isPressed2 = !isPressed2;
         });
       },

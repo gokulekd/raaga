@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:raaga/Widgets/musicPlayPage/openPlayer.dart';
+
 
 class playButton_bottomSheet extends StatefulWidget {
-  const playButton_bottomSheet({Key? key}) : super(key: key);
+
+ dynamic PlayButton_obj_assetAudioplayer;
+   playButton_bottomSheet({Key? key,required this.PlayButton_obj_assetAudioplayer}) : super(key: key);
 
   @override
   State<playButton_bottomSheet> createState() => _playButton_bottomSheetState();
@@ -14,8 +20,15 @@ class _playButton_bottomSheetState extends State<playButton_bottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(12),
+    
+    return PlayerBuilder.isPlaying(
+                          player: widget.PlayButton_obj_assetAudioplayer,
+                          builder: (context, isPlaying) {
+                            return 
+                       
+    
+     Container(
+  
         child: Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,17 +36,26 @@ class _playButton_bottomSheetState extends State<playButton_bottomSheet> {
           InkWell(
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,
-            onTap: () {
-              setState(() {
+            onTap: ()async {
+              
+                      await widget.PlayButton_obj_assetAudioplayer.playOrPause();
+           
+
+
+        setState(() {
+        
+  
                 isPressed = !isPressed;
               });
             },
             child: AnimatedContainer(
-              height: 50,
-              width: 50,
+              
+              height: 60,
+              width: 60,
               curve: Curves.fastLinearToSlowEaseIn,
               duration: Duration(milliseconds: 300),
               decoration: BoxDecoration(
+                
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(isPressed ? 0.2 : 0.0),
@@ -41,10 +63,10 @@ class _playButton_bottomSheetState extends State<playButton_bottomSheet> {
                     offset: Offset(5, 10),
                   ),
                 ],
-                color: isPressed ? Colors.white : Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
+                color: isPressed ? Color.fromARGB(255, 199, 196, 207) : Color.fromARGB(248, 181, 160, 223).withOpacity(0.5),
                 shape: BoxShape.circle,
               ),
-              child: Icon(isPressed?Icons.play_arrow:Icons.pause,size: 30,),
+              child: Icon(isPressed?Icons.play_arrow:Icons.pause,size: 35,),
               
                
               ),
@@ -54,5 +76,10 @@ class _playButton_bottomSheetState extends State<playButton_bottomSheet> {
       ),
     ),
     );
+                          }
+    );
+
+
+
   }
 }
