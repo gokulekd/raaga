@@ -35,6 +35,11 @@ class song_tile_menu extends StatelessWidget {
                   await box.put("favourites", favourites);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
+                      behavior: SnackBarBehavior.floating,
+         margin: EdgeInsets.only(bottom: 75,right: 10,left: 10),
+        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),),
+        backgroundColor: Color.fromARGB(255, 42, 41, 123),
                       content: Text(
                         temp.title  + " Added to Favourites",
                        
@@ -55,6 +60,12 @@ class song_tile_menu extends StatelessWidget {
                   await box.put("favourites", favourites);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
+                      behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(bottom: 75,right: 10,left: 10),
+        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),),
+        backgroundColor: Color.fromARGB(255, 42, 41, 123),
+        duration: Duration(seconds: 1),
                       content: Text(
                         temp.title+ " Removed from Favourites",
                         style: const TextStyle(fontFamily: 'Poppins'),

@@ -15,7 +15,7 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(songDataBaseModelAdapter().typeId)) {
     Hive.registerAdapter(songDataBaseModelAdapter());
   }
-
+var playlistname = boxname;
 
   await Hive.openBox<List>(boxname);
   final box = Raaga_SongData.getInstance();
@@ -26,6 +26,12 @@ Future<void> main() async {
     await box.put("favourites", likedSongs);
   }
   
+
+
+  if (playlistname != "songs" || playlistname != "favourites"){
+    
+
+  }
   runApp(MyApp());
 }
 

@@ -118,20 +118,20 @@ class Screen_MyMusicState extends State<Screen_MyMusic>
                  splashColor: Colors.transparent,
                  child: Container(
                    margin: EdgeInsets.only(right: 10,top: 10,bottom: 10),
-                   height: _w / 4.5,
+                   height: _w / 6,
                    width: _w,
                    alignment: Alignment.center,
                    decoration: BoxDecoration(
                      color: Color.fromARGB(255, 71, 64, 131),
-                     borderRadius: BorderRadius.only(topRight: Radius.circular(20),bottomRight: Radius.circular(20),),
+                     borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomRight: Radius.circular(30),),
                    ),
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Container(
                          margin: EdgeInsets.only(left: 10),
-                         width: 55.w,
-                         height: 55.h,
+                         width: 45.w,
+                         height: 45.h,
                          decoration: BoxDecoration(
                              borderRadius: BorderRadius.circular(10)),
                          child: ClipRRect(
@@ -210,7 +210,10 @@ class Screen_MyMusicState extends State<Screen_MyMusic>
                          crossAxisAlignment: CrossAxisAlignment.center,
                          children: [
                         
-                           song_tile_menu(songId: widget.Fullsongs[index].metas.id.toString()),
+                           Padding(
+                             padding: const EdgeInsets.all(8.0),
+                             child: song_tile_menu(songId: widget.Fullsongs[index].metas.id.toString()),
+                           ),
                          ],
                        ),
                      ],

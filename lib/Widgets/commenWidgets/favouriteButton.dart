@@ -28,6 +28,12 @@ class _FavouriteButtonState extends State<FavouriteButton> {
 
 
       var snackBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),),
+        backgroundColor: Color.fromARGB(255, 42, 41, 123),
+   
         duration: Duration(seconds: 1),
         content:istapped? Text('Added to Favourite'):Text("removed to Favourite")
         );

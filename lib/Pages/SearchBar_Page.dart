@@ -21,10 +21,10 @@ class _SearchBar_PageState extends State<SearchBar_Page> {
    
     var Query = " ";
     return Scaffold(
+           backgroundColor:Color(0xff262054),
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: Color.fromARGB(255, 103, 58, 183),
-
+             backgroundColor:Color(0xff262054),
 
      
      
