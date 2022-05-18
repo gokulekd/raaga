@@ -7,10 +7,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:raaga/Widgets/bottomNavBar/BottomNavbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:raaga/dataBase/songModel.dart';
-import 'package:raaga/main.dart';
 
+ 
 List<Audio> fullSongs = [];
-
+List<songDataBaseModel> dbSongs_dataBase  = [];
 class screen_splashScreen extends StatefulWidget {
   const screen_splashScreen({Key? key}) : super(key: key);
 
@@ -38,7 +38,7 @@ class _screen_splashScreenState extends State<screen_splashScreen> {
  List<SongModel> fetchedSongs_OnAudioQuery = [];
    List<SongModel> allSongs_OnAudioQuery = [];
    List<songDataBaseModel> mappedSongs_dataBase = [];
-  List<songDataBaseModel> dbSongs_dataBase  = [];
+  
  
 
 

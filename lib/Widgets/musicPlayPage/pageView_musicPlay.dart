@@ -2,6 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:raaga/Pages/Screen_Splash.dart';
 import 'package:raaga/Widgets/bottomsheet_playmusic/playbutton_bottomSheet.dart';
 import 'package:raaga/Widgets/commenWidgets/favouriteButton.dart';
 import 'package:raaga/Widgets/musicPlayPage/addToPlayList.dart';
@@ -122,7 +123,7 @@ class _musicPlay_pageViewState extends State<musicPlay_pageView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  FavouriteButton(),
+              //  FavouriteButton(AddFAVid:fullSongs[inde].id.toString()),
                    StatefulBuilder(
                           builder: (BuildContext context,
                               void Function(void Function()) setState)

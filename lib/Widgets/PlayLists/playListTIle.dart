@@ -1,236 +1,426 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:marquee/marquee.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:raaga/Pages/pageView_playlist.dart';
 import 'package:raaga/Widgets/PlayLists/playlist_SongView_page.dart';
+import 'package:raaga/dataBase/songModel.dart';
+
 class playlistTile extends StatefulWidget {
-  IconData iconName;
   String PlaylistName;
- String SongsNumber;
-   playlistTile({ Key? key,required this.iconName,required this.PlaylistName,required this.SongsNumber }) : super(key: key);
+  String SongsNumber;
+  var playlistNameFromTile;
+  playlistTile(
+      {Key? key,
+      required this.PlaylistName,
+      required this.SongsNumber,
+      required this.playlistNameFromTile})
+      : super(key: key);
 
   @override
   State<playlistTile> createState() => _playlistTileState();
 }
 
+final box = Raaga_SongData.getInstance();
+  String? _title;
 class _playlistTileState extends State<playlistTile> {
- final _formKey = GlobalKey<FormState>();
+  List playlistsname_keys = box.keys.toList();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-             Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Playlist_SongView_page()));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
+    return Container(
+      margin: const EdgeInsets.all(10),
+      width: 300,
+      height: 80,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: const Color.fromARGB(255, 5, 36, 61),
+      ),
+      child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Playlist_SongView_page(
+                    playlistName: widget.playlistNameFromTile,
+                  )));
+        },
+        leading: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-             color: Color.fromARGB(255, 210, 189, 229),
-          ),height: 97,
-          width: 320,
-        child: Row(
+            color: const Color.fromARGB(255, 169, 138, 192),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          width: 60,
+          height: 100,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: const Icon(
+              FontAwesomeIcons.music,
+              size: 30,
+              color: const Color.fromARGB(255, 148, 78, 73),
+            ),
+          ),
+        ),
+        title: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-    
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 189, 139, 191),
-                       borderRadius: BorderRadius.circular(15),
-                     
-                ),
-                
-                width: 70,
-                height: 100,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child:Icon(widget.iconName,size: 40,color: Color.fromARGB(255, 148, 78, 73),),
-                ),
+            const Padding(
+              padding: EdgeInsets.only(right: 5, left: 5),
+              child: Icon(
+                Icons.my_library_music_rounded,
+                size: 17,
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-                    SizedBox(
-                    height: 12,
-                     ),
-                        Container(
-                          height: 30,
-                          width: 220,
-                         
-                          child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 5,left: 5),
-                              child: Icon(
-                                Icons.my_library_music_rounded,
-                                size: 17,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
-                             Text(
-                          widget.PlaylistName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(194, 171, 94, 219),
-                            fontSize: 18,
-                          ),
-                      ),
-    
-                          ],
-                      ),
-                        ),
-    
-                      SizedBox(height: 10,),
-                      Container(
-                           height: 30,
-                    width: 220,
-                     
-                        child: Row(
-                          children: [
-                            Padding(
-                            padding: const EdgeInsets.only(right: 5, left: 5),
-                              child: Icon(
-                           Icons.music_note,
-                                size: 17,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              widget.SongsNumber,
-                              style: TextStyle(
-                       fontSize: 15,
-                       fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(59, 26, 6, 6).withOpacity(.8),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-             ], 
-            ),
-            Column(
-            
-              children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: IconButton(onPressed: (){
-    
-    
-                              showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text(
-                          'Edit Playlist',
-                          textAlign: TextAlign.center,
-                        ),
-                        content: Container(
-                          width: 100,
-                          height: 100,
-                          color: Colors.white,
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              children: <Widget>[
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                     fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: Colors.blue,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(255, 54, 101, 244),
-                    
-                        ),
-                      ),
-                                
-                                    hintText: "Edit Playlist Name"
-                                  ),
-    
-                                  
-                                  validator: (value) {
-                                    // validation logic
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                // text in form is valid
-                              }
-                            },
-                            child: const Text('Done'),
-                          ),
-                        ],
-                      ),
-                    );
-    
-    
-    
-                            }, icon: Icon(Icons.edit,color: Color.fromARGB(255, 128, 81, 81),size: 20,)),
-                          ),
-                          Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: IconButton(
-                        onPressed: () {
-    
-                                
-                              showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text(
-                          'Delete Playlist',
-                          textAlign: TextAlign.center,
-                        ),
-                        content:Text(" Do you want to Delete this playlist"),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                // text in form is valid
-                              }
-                            },
-                            child: const Text('Done'),
-                          ),
-                        ],
-                      ),
-                    );
-    
-    
-    
-    
-                        }, icon: Icon(Icons.delete),color: Color.fromARGB(255, 128, 81, 81),),
-                  )
-              ],
+            Text(
+              widget.PlaylistName,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(194, 171, 94, 219),
+                fontSize: 18,
+              ),
             ),
           ],
         ),
-          
-          
+        subtitle: Row(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(right: 5, left: 5),
+              child: Icon(
+                Icons.music_note,
+                size: 17,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              widget.SongsNumber + " songs",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: const Color.fromARGB(59, 26, 6, 6).withOpacity(.8),
+              ),
+            ),
+          ],
+        ),
+        trailing: PopupMenuButton(
+          icon: const FaIcon(
+            FontAwesomeIcons.circleChevronDown,
+            size: 17,
+            color: Color.fromARGB(255, 207, 200, 222),
+          ),
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem(
+              value: 1,
+              onTap: () async {},
+              child: const Text(
+                "Edit PlayList",
+              ),
+            ),
+            PopupMenuItem(
+              value: 2,
+              onTap: () async {},
+              child: const Text(
+                "Delete PlayList",
+              ),
+            ),
+          ],
+          onSelected: (value) async {
+            if (value == 1) {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text(
+                    'Edit Playlist',
+                    textAlign: TextAlign.center,
+                  ),
+                  content: Container(
+                    width: 100,
+                    height: 100,
+                    color: Colors.white,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            initialValue:widget.playlistNameFromTile,
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                    color: Color.fromARGB(255, 54, 101, 244),
+                                  ),
+                                ),
+                                hintText: "Edit Playlist Name"),
+                                  onChanged: (value) {
+                                           _title = value.trim();
+                },
+                            validator: (value) {
+ 
+                  List keys = box.keys.toList();
+                  if (value!.trim() == "") {
+                    return "name Required";
+                  }
+                  if (keys
+                      .where((element) => element == value.trim())
+                      .isNotEmpty) {
+                    return "this name already exits";
+                  }
+                  return null;
+        
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        if (_formKey.currentState!.validate()) {
+                         List? playlists = box.get(widget.playlistNameFromTile);
+                        box.put(_title, playlists!);
+                        box.delete(widget.playlistNameFromTile);
+                    
+                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            margin: EdgeInsets.only(
+                                bottom: 75, right: 10, left: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            backgroundColor: Color.fromARGB(255, 42, 41, 123),
+                            duration: Duration(seconds: 1),
+                            content: const Text(
+                              "  Playlist re-named",
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Text('Done'),
+                    ),
+                  ],
+                ),
+              );
+
+              Navigator.canPop(context);
+            }
+
+            if (value == 2) {
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text(
+                    'Delete Playlist',
+                    textAlign: TextAlign.center,
+                  ),
+                  content: const Text(" Do you want to Delete this playlist"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(
+                        context,
+                      ),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        box.delete(widget.playlistNameFromTile);
+                        setState(() {
+                          playlistsname_keys = box.keys.toList();
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            duration: Duration(seconds: 1),
+                            behavior: SnackBarBehavior.floating,
+                            margin: EdgeInsets.only(
+                                bottom: 75, right: 10, left: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            backgroundColor: Color.fromARGB(255, 42, 41, 123),
+                            content: Text("play List deleted"),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Done'),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
         ),
       ),
     );
   }
 }
+      
+      
+//       Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Container(
+//           decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(10),
+//              color: Color.fromARGB(255, 210, 189, 229),
+//           ),
+//           height: 75,
+//           width: 320,
+//         child: Row(
+//           children: [
+         
+//             Column(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//              children: [
+//                     SizedBox(
+//                     height: 12,
+//                      ),
+//                         Container(
+//                           height: 30,
+//                           width: 220,
+                         
+//                           child: 
+//                         ),
+    
+//                       SizedBox(height: 1,),
+//                       Container(
+//                            height: 30,
+//                     width: 220,
+                     
+//                         child: 
+//                       )
+//              ], 
+//             ),
+//             Column(
+            
+//               children: [
+//                           Padding(
+//                             padding: const EdgeInsets.only(left: 10),
+//                             child: IconButton(onPressed: (){
+    
+    
+//                               showDialog<String>(
+//                       context: context,
+//                       builder: (BuildContext context) => AlertDialog(
+//                         title: const Text(
+//                           'Edit Playlist',
+//                           textAlign: TextAlign.center,
+//                         ),
+//                         content: Container(
+//                           width: 100,
+//                           height: 100,
+//                           color: Colors.white,
+//                           child: Form(
+//                             key: _formKey,
+//                             child: Column(
+//                               children: <Widget>[
+//                                 TextFormField(
+//                                   decoration: InputDecoration(
+//                                      fillColor: Colors.white,
+//                       focusedBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(10.0),
+//                         borderSide: BorderSide(
+//                           color: Colors.blue,
+//                         ),
+//                       ),
+//                       enabledBorder: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(10.0),
+//                         borderSide: BorderSide(
+//                           color: Color.fromARGB(255, 54, 101, 244),
+                    
+//                         ),
+//                       ),
+                                
+//                                     hintText: "Edit Playlist Name"
+//                                   ),
+    
+                                  
+//                                   validator: (value) {
+//                                     // validation logic
+//                                   },
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                         actions: <Widget>[
+//                           TextButton(
+//                             onPressed: () => Navigator.pop(context, 'Cancel'),
+//                             child: const Text('Cancel'),
+//                           ),
+//                           TextButton(
+//                             onPressed: () {
+//                               if (_formKey.currentState!.validate()) {
+//                                 // text in form is valid
+//                               }
+//                             },
+//                             child: const Text('Done'),
+//                           ),
+//                         ],
+//                       ),
+//                     );
+    
+    
+    
+//                             }, icon: Icon(Icons.edit,color: Color.fromARGB(255, 128, 81, 81),size: 20,)),
+//                           ),
+//                           Padding(
+//                     padding: const EdgeInsets.only(left: 10),
+//                     child: IconButton(
+//                         onPressed: () {
+    
+                                
+//                               showDialog<String>(
+//                       context: context,
+//                       builder: (BuildContext context) => AlertDialog(
+//                         title: const Text(
+//                           'Delete Playlist',
+//                           textAlign: TextAlign.center,
+//                         ),
+//                         content:Text(" Do you want to Delete this playlist"),
+//                         actions: [
+//                           TextButton(
+//                             onPressed: () => Navigator.pop(context, 'Cancel'),
+//                             child: const Text('Cancel'),
+//                           ),
+//                           TextButton(
+//                             onPressed: () {
+//                               if (_formKey.currentState!.validate()) {
+//                                 // text in form is valid
+//                               }
+//                             },
+//                             child: const Text('Done'),
+//                           ),
+//                         ],
+//                       ),
+//                     );
+    
+    
+    
+    
+//                         }, icon: Icon(Icons.delete),color: Color.fromARGB(255, 128, 81, 81),),
+//                   )
+//               ],
+//             ),
+//           ],
+//         ),
+          
+          
+//         ),
+//       ),
+//     );
+//   }
+// }
 

@@ -1,98 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:raaga/Pages/pageView_playlist.dart';
+import 'package:raaga/dataBase/songModel.dart';
 
+TextEditingController _controller = TextEditingController();
+ var playlistNameKey =_controller.text; 
 class createNewPlaylistButton extends StatefulWidget {
-  const createNewPlaylistButton({ Key? key }) : super(key: key);
+  const createNewPlaylistButton({Key? key}) : super(key: key);
 
   @override
-  State<createNewPlaylistButton> createState() => _createNewPlaylistButtonState();
+  State<createNewPlaylistButton> createState() =>
+      _createNewPlaylistButtonState();
 }
 
 class _createNewPlaylistButtonState extends State<createNewPlaylistButton> {
 
-   final _formKey = GlobalKey<FormState>();
+  List<songDataBaseModel> playlists = [];
+  final box = Raaga_SongData.getInstance();
+  String? title;
+  final formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-                      title: const Text(
-                        'Add To Playlist',
-                        textAlign: TextAlign.center,
-                      ),
-                      content: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        width: 150,
-                        height: 80,
-                      
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: <Widget>[
-                              TextFormField(
-                                decoration: InputDecoration(
-                                   fillColor: Colors.white,
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(
-                        color: Color.fromARGB(255, 54, 101, 244),
-                  
-                      ),
-                    ),
-                              
-                                  hintText: "Enter Playlist Name"
-                                ),
-
-                                
-                                validator: (value) {
-                                  // validation logic
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      actions: <Widget>[
-                        ElevatedButton.icon(
-                          style: ButtonStyle(
-  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-    RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18.0),
-    
-    )
-  )
-),
-                          
-                          onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.cancel), label: Text("cancel")),  
-                     
-                     
-                        
-                        ElevatedButton.icon(
-                          style: ButtonStyle(
-  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-    RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(18.0),
-   
-    )
-  )
-),
-                          icon:Icon(Icons.library_music_outlined),
-                          onPressed: () {
-
-                            if (_formKey.currentState!.validate()) {
-                              // text in form is valid
-                            }
-                          },
-                          label: const Text('Create new Playlist'),
-                        ),
-                      ],
-                    );
+  
+    return Padding(
+      padding: EdgeInsets.only(
+             bottom: MediaQuery.of(context).viewInsets.bottom),
+      child:  AlertDialog(
+      title: const Text('Playlist Name'),
+      content: Form(
+          key: formkey,
+          child: TextFormField(
+            onChanged: (value) {
+              title = value.trim();
+            },
+            validator: (value) {
+              List keys = box.keys.toList();
+              if (value!.trim() == "") {
+                return "Name Required";
+              }
+              if (keys.where((element) => element == value.trim()).isNotEmpty) {
+                return "This Name Already Exists";
+              }
+              return null;
+            },
+          )),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.black),
+                )),
+            TextButton(
+                onPressed: () {
+                  if (formkey.currentState!.validate()) {
+                    box.put(title, playlists);
+                    Navigator.pop(context);
+                    setState(() {});
+                  }
+                },
+                child: const Text(
+                  'Save',
+                  style: TextStyle(color: Colors.black),
+                )),
+          ],
+        ),
+      ],
+    ),
+    );
   }
 }

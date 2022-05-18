@@ -8,6 +8,7 @@ import 'package:raaga/Pages/Screen_Splash.dart';
 import 'package:raaga/dataBase/songModel.dart';
 
 Box<songDataBaseModel>? SongDB;
+ 
 
 Future<void> main() async {
   
@@ -15,23 +16,23 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(songDataBaseModelAdapter().typeId)) {
     Hive.registerAdapter(songDataBaseModelAdapter());
   }
-var playlistname = boxname;
+
 
   await Hive.openBox<List>(boxname);
   final box = Raaga_SongData.getInstance();
 
   List<dynamic> favKeys = box.keys.toList();
+
  if (!favKeys.contains("favourites")) {
     List<dynamic> likedSongs = [];
     await box.put("favourites", likedSongs);
   }
-  
 
 
-  if (playlistname != "songs" || playlistname != "favourites"){
-    
 
-  }
+
+
+
   runApp(MyApp());
 }
 
@@ -48,10 +49,10 @@ class MyApp extends StatelessWidget {
       builder: (_) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          // Use this line to prevent extra rebuilds
+         
           useInheritedMediaQuery: true,
           title: 'First Method',
-          // You can use the library anywhere in the app even in theme
+   
 
           home: screen_splashScreen(),
         );

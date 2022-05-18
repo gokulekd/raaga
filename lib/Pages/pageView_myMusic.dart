@@ -32,6 +32,8 @@ class Screen_MyMusicState extends State<Screen_MyMusic>
 
   //  final box = Raaga_SongData.getInstance();
   final AssetsAudioPlayer player = AssetsAudioPlayer.withId("0");
+
+
   final _audioQuery = OnAudioQuery();
 
   Audio find(List<Audio> source, String fromPath) {
@@ -104,7 +106,7 @@ class Screen_MyMusicState extends State<Screen_MyMusic>
               );
             }
             return ListView.builder(
-              itemCount: item.data!.length,
+              itemCount:dbSongs_dataBase.length,
               itemBuilder: (context, index) =>
                InkWell(
                  enableFeedback: true,
@@ -229,196 +231,4 @@ class Screen_MyMusicState extends State<Screen_MyMusic>
       // top me rahna
     );
   }
-
-  void searchSongs(String query) {
-    // List<Audio> searchTitle = allSongs.where((element) {
-    //     return element.metas.title!.toLowerCase().startsWith(
-    //           search.toLowerCase(),
-    //         );
-    //   }).toList();
-
-    //   final books = allBooks.where((book) {
-    //     final titleLower = book.title.toLowerCase();
-    //     final authorLower = book.author.toLowerCase();
-    //     final searchLower = query.toLowerCase();
-
-    //     return titleLower.contains(searchLower) ||
-    //         authorLower.contains(searchLower);
-    //   }).toList();
-
-    //   setState(() {
-    //     this.query = query;
-    //     this.books = books;
-    //   });
-  }
-}
-
-Widget cards(BuildContext context, Animation<double> _animation,
-    Animation<double> _animation2) {
-  double _w = MediaQuery.of(context).size.width;
-  return FutureBuilder<List<SongModel>>(
-    future: _audioQuery.querySongs(
-      sortType: null,
-      orderType: OrderType.ASC_OR_SMALLER,
-      uriType: UriType.EXTERNAL,
-      ignoreCase: true,
-    ),
-    builder: (context, item) {
-      if (item.data == null) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-      if (item.data!.isEmpty) {
-        return Center(
-          child: Text(" No Songs Found"),
-        );
-      }
-      return ListView.builder(
-        itemCount: 100,
-        itemBuilder: (context, index) => Opacity(
-          opacity: _animation.value,
-          child: Transform.translate(
-            offset: Offset(0, _animation2.value),
-            child: InkWell(
-              enableFeedback: true,
-              onTap: () {},
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(_w / 30, _w / 30, _w / 30, 0),
-                height: _w / 3.9,
-                width: _w,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Color(0xffB993CB),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      width: 75,
-                      height: 75,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          "assets/logo12.jpg",
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      width: _w / 2.1,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Icon(
-                                  Icons.music_note,
-                                  size: 17,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                item.data![index].displayNameWOExt,
-                                textScaleFactor: 1.6,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black.withOpacity(.7),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: Icon(
-                                  Icons.album,
-                                  size: 17,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                "${item.data![index].genre}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black.withOpacity(.8),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.more_vert,
-                            size: 20,
-                          ),
-                        ),
-                        FavouriteButton(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
-class MyPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint_1 = Paint()
-      ..color = Colors.deepPurple
-      ..style = PaintingStyle.fill;
-
-    Path path_1 = Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width * .1, 0)
-      ..cubicTo(size.width * .05, 0, 0, 20, 0, size.width * .08);
-
-    Path path_2 = Path()
-      ..moveTo(size.width, 0)
-      ..lineTo(size.width * .9, 0)
-      ..cubicTo(
-          size.width * .95, 0, size.width, 20, size.width, size.width * .08);
-
-    Paint paint_2 = Paint()
-      ..color = Colors.deepPurple
-      ..strokeWidth = 1
-      ..style = PaintingStyle.stroke;
-
-    Path path_3 = Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width, 0);
-
-    canvas.drawPath(path_1, paint_1);
-    canvas.drawPath(path_2, paint_1);
-    canvas.drawPath(path_3, paint_2);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
+    }

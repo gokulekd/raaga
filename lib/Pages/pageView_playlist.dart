@@ -1,4 +1,8 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:raaga/Widgets/PlayLists/createNewPlayList.dart';
 import 'package:raaga/Widgets/PlayLists/createNewPlaylistButton.dart';
 import 'package:raaga/Widgets/PlayLists/editButton.dart';
@@ -7,6 +11,10 @@ import 'package:raaga/Widgets/PlayLists/playListTIle.dart';
 import 'package:raaga/Widgets/bottomNavBar/BottomNavbar.dart';
 import 'package:raaga/Widgets/bottomsheet_playmusic/nextButton_SongPlay.dart';
 import 'package:raaga/Widgets/favourite/playAll_Button.dart';
+import 'package:raaga/dataBase/songModel.dart';
+
+
+
 
 class pageview_Playlist extends StatefulWidget {
   const pageview_Playlist({Key? key}) : super(key: key);
@@ -15,36 +23,60 @@ class pageview_Playlist extends StatefulWidget {
   State<pageview_Playlist> createState() => _pageview_PlaylistState();
 }
 
+final box = Raaga_SongData.getInstance();
+
+  List playlistsname = box.keys.toList() ;
+  List<songDataBaseModel> playlistSongs = [];
+
+ 
+
+
+
+
 class _pageview_PlaylistState extends State<pageview_Playlist>
     with TickerProviderStateMixin {
- 
+
   bool isTapped = false;
   @override
   Widget build(BuildContext context) {
+
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: Color.fromARGB(255, 103, 58, 183),
-      
+        backgroundColor: Color(0xff262054),
         centerTitle: true,
         title: Container(
-          padding: EdgeInsets.only(top: 8),
-          width: 150,
+          padding: const EdgeInsets.only(top: 3),
+          width: 390,
           height: 40,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: Color.fromARGB(255, 94, 33, 168),
+            borderRadius: BorderRadius.circular(12),
+            color: const Color.fromARGB(255, 61, 45, 104),
           ),
-          child: Text(
-            "Playlists",
-            textAlign: TextAlign.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(
+                FontAwesomeIcons.circlePlay,
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Text(
+                "Playlist ",
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),
-
-
+      backgroundColor: const Color(0xff262054),
       body: SafeArea(
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -58,64 +90,77 @@ class _pageview_PlaylistState extends State<pageview_Playlist>
                     isTapped = value;
                   });
                 },
-                onTap: () {
-
+                onTap: () async {
+                
                   showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) =>createNewPlaylistButton()
-                     
-                  );
-
-
-
-
+                      context: context,
+                      builder: (BuildContext context) =>
+                          createNewPlaylistButton());
                 },
                 child: AnimatedContainer(
-                  
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: isTapped ? 30 : 40,
                   width: isTapped ? 190 : 200,
-                  
                   decoration: BoxDecoration(
                     color: isTapped
-                        ? Color.fromARGB(255, 171, 124, 179)
-                        : Color.fromARGB(255, 212, 177, 222),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(30),
+                        ? const Color.fromARGB(255, 171, 124, 179)
+                        : const Color.fromARGB(255, 212, 177, 222),
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30),
                     ),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 30,
-                        offset: Offset(3, 7),
+                        offset: const Offset(3, 7),
                       ),
                     ],
                   ),
-                   child: Center(child: Text("Create New Playlist",style: TextStyle(color: Color.fromARGB(255, 86, 42, 118),fontSize: 18,fontWeight: FontWeight.bold),),),
-                
-                  
+                  child: const Center(
+                    child: const Text(
+                      "Create New Playlist",
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 86, 42, 118),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
               ),
-              
             ),
-          Expanded(child: 
-          ListView.builder(itemBuilder: (context, index){
-            
-            return playlistTile(iconName: Icons.abc, PlaylistName: 'PlaylistName', SongsNumber: 'SongsNumber');
-          },
-          itemCount: 6,
-          padding: EdgeInsets.only(bottom: 80),
-          ),
-          
-          ),
-       
+            Expanded(
+              child: ValueListenableBuilder(
+                      valueListenable: box.listenable(),
+                      builder: (context, boxes, _) {
+                        playlistsname = box.keys.toList();
+                        return ListView.builder(
+                            itemCount: playlistsname.length,
+                            itemBuilder: (context, index) {
+                              var playlistSongs = box.get(playlistsname[index])!;
+                   
+                              return Container(
+                                child: playlistsname[index] != "musics" &&
+                                        playlistsname[index] != "favourites" &&
+                                        playlistsname[index] != "Recently_Played"
+                                    ? playlistTile(playlistNameFromTile: playlistsname[index],
+                                 
+                                      PlaylistName: playlistsname[index].toString(),
+                                     SongsNumber: playlistSongs.length.toString()
+                                     )
+                                     :
+                                     SizedBox(),
+                              );
+                            }
+                        );
+              
+                      }
+              ),
+                             
+            ),
           ],
-        
         ),
-        
-      
-      ),
+      ), 
     );
   }
-}
+} 
