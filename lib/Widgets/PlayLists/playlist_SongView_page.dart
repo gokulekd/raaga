@@ -5,9 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:marquee/marquee.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:raaga/Widgets/PlayLists/bottomsheet_plalist.dart';
-import 'package:raaga/Widgets/PlayLists/createNewPlayList.dart';
-import 'package:raaga/Widgets/favourite/showModelBottomSheet.dart';
+import 'package:raaga/Widgets/PlayLists/bottomsheet_plalist.dart'; 
 import 'package:raaga/Widgets/musicPlayPage/openPlayer.dart';
 import 'package:raaga/dataBase/songModel.dart';
 
@@ -61,7 +59,7 @@ class _Playlist_SongView_pageState extends State<Playlist_SongView_page> {
             size: 14,
           ),
           label: Text("Add Songs"),
-        ),
+        ), 
       ),
       backgroundColor: const Color(0xff262054),
       appBar: AppBar(
@@ -141,7 +139,7 @@ class _Playlist_SongView_pageState extends State<Playlist_SongView_page> {
                                           "assets/songs logo.png",
                                           fit: BoxFit.cover,
                                         ),
-                                        id: playlistSongs[index].id,
+                                       id: playlistSongs[index].id,
                                         artworkBorder:
                                             BorderRadius.circular(5.0),
                                         type: ArtworkType.AUDIO),

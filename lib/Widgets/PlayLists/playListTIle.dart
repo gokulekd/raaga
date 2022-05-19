@@ -7,13 +7,9 @@ import 'package:raaga/dataBase/songModel.dart';
 class playlistTile extends StatefulWidget {
   String PlaylistName;
   String SongsNumber;
-  var playlistNameFromTile;
-  playlistTile(
-      {Key? key,
-      required this.PlaylistName,
-      required this.SongsNumber,
-      required this.playlistNameFromTile})
-      : super(key: key);
+  String playlistNameFromTile;
+
+  playlistTile({Key? key,required this.PlaylistName,  required this.SongsNumber, required this.playlistNameFromTile, }): super(key: key);
 
   @override
   State<playlistTile> createState() => _playlistTileState();
@@ -30,50 +26,54 @@ class _playlistTileState extends State<playlistTile> {
     return Container(
       margin: const EdgeInsets.all(10),
       width: 300,
-      height: 80,
+      height: 75,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: const Color.fromARGB(255, 5, 36, 61),
+        color: Color.fromARGB(255, 92, 74, 197),
       ),
       child: ListTile(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
+        onTap: (){
+Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Playlist_SongView_page(
-                    playlistName: widget.playlistNameFromTile,
-                  )));
-        },
+                    playlistName: widget.playlistNameFromTile),
+                                  ),
+); 
+        } ,
         leading: Container(
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 169, 138, 192),
+             color: const Color.fromARGB(255, 61, 45, 104),
             borderRadius: BorderRadius.circular(15),
           ),
           width: 60,
-          height: 100,
+          height: 85,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: const Icon(
               FontAwesomeIcons.music,
               size: 30,
-              color: const Color.fromARGB(255, 148, 78, 73),
+              color: Color.fromARGB(255, 215, 206, 205),
             ),
           ),
         ),
         title: Row(
           children: [
             const Padding(
-              padding: EdgeInsets.only(right: 5, left: 5),
+         padding: EdgeInsets.only(right: 5, left: 5),
               child: Icon(
                 Icons.my_library_music_rounded,
                 size: 17,
                 color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
-            Text(
-              widget.PlaylistName,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(194, 171, 94, 219),
-                fontSize: 18,
+            Padding(
+       padding: EdgeInsets.only(right: 5, left: 5),
+              child: Text(
+                widget.PlaylistName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(194, 221, 212, 241),
+                  fontSize: 20,
+                ),
               ),
             ),
           ],
@@ -81,19 +81,22 @@ class _playlistTileState extends State<playlistTile> {
         subtitle: Row(
           children: [
             const Padding(
-              padding: EdgeInsets.only(right: 5, left: 5),
+              padding: EdgeInsets.only(right: 5, left: 5,top: 15),
               child: Icon(
                 Icons.music_note,
                 size: 17,
                 color: Colors.white,
               ),
             ),
-            Text(
-              widget.SongsNumber + " songs",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(59, 26, 6, 6).withOpacity(.8),
+            Padding(
+         padding: EdgeInsets.only(right: 5, left: 5,top: 15),
+              child: Text(
+                widget.SongsNumber + " songs",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(119, 234, 185, 185).withOpacity(.8),
+                ),
               ),
             ),
           ],

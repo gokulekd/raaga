@@ -8,11 +8,11 @@ import 'package:raaga/Widgets/PlayLists/createNewPlaylistButton.dart';
 import 'package:raaga/Widgets/PlayLists/editButton.dart';
 
 import 'package:raaga/Widgets/PlayLists/playListTIle.dart';
+import 'package:raaga/Widgets/PlayLists/playlist_SongView_page.dart';
 import 'package:raaga/Widgets/bottomNavBar/BottomNavbar.dart';
 import 'package:raaga/Widgets/bottomsheet_playmusic/nextButton_SongPlay.dart';
 import 'package:raaga/Widgets/favourite/playAll_Button.dart';
 import 'package:raaga/dataBase/songModel.dart';
-
 
 
 
@@ -22,28 +22,15 @@ class pageview_Playlist extends StatefulWidget {
   @override
   State<pageview_Playlist> createState() => _pageview_PlaylistState();
 }
-
 final box = Raaga_SongData.getInstance();
-
-  List playlistsname = box.keys.toList() ;
-  List<songDataBaseModel> playlistSongs = [];
-
- 
-
-
-
+List playlistsname = box.keys.toList();
+List<songDataBaseModel> playlistSongs = [];
 
 class _pageview_PlaylistState extends State<pageview_Playlist>
     with TickerProviderStateMixin {
-
   bool isTapped = false;
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -88,10 +75,9 @@ class _pageview_PlaylistState extends State<pageview_Playlist>
                 onHighlightChanged: (value) {
                   setState(() {
                     isTapped = value;
-                  });
+                  },);
                 },
                 onTap: () async {
-                
                   showDialog<String>(
                       context: context,
                       builder: (BuildContext context) =>
@@ -104,8 +90,8 @@ class _pageview_PlaylistState extends State<pageview_Playlist>
                   width: isTapped ? 190 : 200,
                   decoration: BoxDecoration(
                     color: isTapped
-                        ? const Color.fromARGB(255, 171, 124, 179)
-                        : const Color.fromARGB(255, 212, 177, 222),
+                        ? Color.fromARGB(255, 190, 153, 193)
+                        : Color.fromARGB(255, 177, 177, 222),
                     borderRadius: const BorderRadius.all(
                       const Radius.circular(30),
                     ),
@@ -131,36 +117,33 @@ class _pageview_PlaylistState extends State<pageview_Playlist>
             ),
             Expanded(
               child: ValueListenableBuilder(
-                      valueListenable: box.listenable(),
-                      builder: (context, boxes, _) {
-                        playlistsname = box.keys.toList();
-                        return ListView.builder(
-                            itemCount: playlistsname.length,
-                            itemBuilder: (context, index) {
-                              var playlistSongs = box.get(playlistsname[index])!;
-                   
-                              return Container(
-                                child: playlistsname[index] != "musics" &&
-                                        playlistsname[index] != "favourites" &&
-                                        playlistsname[index] != "Recently_Played"
-                                    ? playlistTile(playlistNameFromTile: playlistsname[index],
-                                 
-                                      PlaylistName: playlistsname[index].toString(),
-                                     SongsNumber: playlistSongs.length.toString()
-                                     )
-                                     :
-                                     SizedBox(),
-                              );
-                            }
-                        );
-              
-                      }
-              ),
-                             
+                  valueListenable: box.listenable(),
+                  builder: (context, boxes, _) {
+                    playlistsname = box.keys.toList();
+                    return ListView.builder(
+                        itemCount: playlistsname.length,
+                        itemBuilder: (context, index) {
+
+                          var playlistSongs = box.get(playlistsname[index])!;
+
+                          return Container(
+                            child: playlistsname[index] != "musics" &&
+                                    playlistsname[index] != "favourites" &&
+                                    playlistsname[index] != "Recently_Played"
+                                ? playlistTile(
+                                    playlistNameFromTile: playlistsname[index],
+                                    PlaylistName:
+                                        playlistsname[index].toString(),
+                                    SongsNumber:
+                                        playlistSongs.length.toString())
+                                : SizedBox(),
+                          );
+                        });
+                  }),
             ),
           ],
         ),
-      ), 
+      ),
     );
   }
-} 
+}

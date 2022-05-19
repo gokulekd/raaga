@@ -1,3 +1,4 @@
+
 import 'dart:async';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -8,7 +9,7 @@ import 'package:raaga/Widgets/bottomNavBar/BottomNavbar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:raaga/dataBase/songModel.dart';
 
- 
+
 List<Audio> fullSongs = [];
 List<songDataBaseModel> dbSongs_dataBase  = [];
 class screen_splashScreen extends StatefulWidget {
@@ -80,6 +81,7 @@ class _screen_splashScreenState extends State<screen_splashScreen> {
       );
     }
    
+
 
     setState(() {});
 

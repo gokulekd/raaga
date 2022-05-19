@@ -4,7 +4,6 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:raaga/Pages/Screen_Splash.dart';
 import 'package:raaga/Widgets/bottomsheet_playmusic/playbutton_bottomSheet.dart';
-import 'package:raaga/Widgets/commenWidgets/favouriteButton.dart';
 import 'package:raaga/Widgets/musicPlayPage/addToPlayList.dart';
 import 'package:raaga/Widgets/musicPlayPage/shuffleSongs.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -37,8 +36,6 @@ class _musicPlay_pageViewState extends State<musicPlay_pageView> {
   Audio find(List<Audio> source, String fromPath) {
     return source.firstWhere((element) => element.path == fromPath);
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -123,70 +120,60 @@ class _musicPlay_pageViewState extends State<musicPlay_pageView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-              //  FavouriteButton(AddFAVid:fullSongs[inde].id.toString()),
-                   StatefulBuilder(
-                          builder: (BuildContext context,
-                              void Function(void Function()) setState)
-                               {
-                            return !isShuffle
-                                ? Container(
-                              
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Color.fromARGB(255, 235, 227, 243),
-                                    
-                                  ),
-                                  child: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isShuffle = true;
-                                     
-                                        assetAudioPlayer.setLoopMode(LoopMode.playlist);
-                                         var snackBar = SnackBar(
-        duration: Duration(seconds: 1),
-        content: Text('Shuffled Song Play'));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                        });
-                                      },
-                                      icon: Icon(Icons.shuffle),
-                                    ),
-                                )
-                                : 
-                                
-                                
-                                
-                              Container(
-                              
-                                  width: 35,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Color.fromARGB(255, 210, 200, 220),
-                                    
-                                  ),
-                                  child: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isShuffle = false;
-                                       assetAudioPlayer.toggleShuffle();
-                                         var snackBar = SnackBar(
-        duration: Duration(seconds: 1),
-        content: Text('looped song play'));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                        });
-                                      },
-                                      icon: Icon(Icons.loop),
-                                    ),
-                                );
+                  //  FavouriteButton(AddFAVid:fullSongs[inde].id.toString()),
+                  StatefulBuilder(
+                    builder: (BuildContext context,
+                        void Function(void Function()) setState) {
+                      return !isShuffle
+                          ? Container(
+                              width: 35,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color.fromARGB(255, 235, 227, 243),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isShuffle = true;
 
-
-
-
-                          },
-                        ),
-                 //  shuffleSongs_musicPlayPage(),
+                                    assetAudioPlayer
+                                        .setLoopMode(LoopMode.playlist);
+                                    var snackBar = SnackBar(
+                                        duration: Duration(seconds: 1),
+                                        content: Text('Shuffled Song Play'));
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  });
+                                },
+                                icon: Icon(Icons.shuffle),
+                              ),
+                            )
+                          : Container(
+                              width: 35,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Color.fromARGB(255, 210, 200, 220),
+                              ),
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isShuffle = false;
+                                    assetAudioPlayer.toggleShuffle();
+                                    var snackBar = SnackBar(
+                                        duration: Duration(seconds: 1),
+                                        content: Text('looped song play'));
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  });
+                                },
+                                icon: Icon(Icons.loop),
+                              ),
+                            );
+                    },
+                  ),
+               
                   addToPlayList(),
                 ],
               ),
@@ -202,11 +189,9 @@ class _musicPlay_pageViewState extends State<musicPlay_pageView> {
                   return ProgressBar(
                     timeLabelPadding: 5,
                     timeLabelLocation: TimeLabelLocation.above,
-                    timeLabelTextStyle:TextStyle(color: Colors.white),
-                    
+                    timeLabelTextStyle: TextStyle(color: Colors.white),
                     progressBarColor: Color.fromARGB(255, 255, 255, 255),
-                    baseBarColor:
-                        Color.fromARGB(255, 66, 36, 137),
+                    baseBarColor: Color.fromARGB(255, 66, 36, 137),
                     thumbColor: Color.fromARGB(255, 124, 116, 230),
                     barHeight: 5.0,
                     thumbRadius: 12.0,
@@ -214,13 +199,15 @@ class _musicPlay_pageViewState extends State<musicPlay_pageView> {
                     total: total,
                     onSeek: (duration) {
                       assetAudioPlayer.seek(duration);
-                    
+
                       print('User selected a new time: $duration');
                     },
                   );
                 }),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -243,7 +230,7 @@ class _musicPlay_pageViewState extends State<musicPlay_pageView> {
                       icon: Icon(
                         Icons.fast_forward,
                         size: 30,
-                           color: Color.fromARGB(183, 255, 255, 255),
+                        color: Color.fromARGB(183, 255, 255, 255),
                       )),
                 ],
               ),

@@ -6,6 +6,8 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:raaga/Pages/Screen_Splash.dart';
 import 'package:raaga/dataBase/songModel.dart';
  List? mainFavouriteList = box.get("favourites");
+
+ var dbSongs_dataBaseId ;
 class showModelBottomSheet_favourite_Screen extends StatefulWidget {
   showModelBottomSheet_favourite_Screen({Key? key}) : super(key: key);
 
@@ -29,7 +31,10 @@ class _showModelBottomSheet_favourite_ScreenState
     double _w = MediaQuery.of(context).size.width;
     return ListView.builder(
       itemCount: fullSongs.length,
-      itemBuilder: (context, index) => InkWell(
+      itemBuilder: (context, index) =>
+
+  
+       InkWell(
         enableFeedback: true,
         onTap: () async {},
         highlightColor: Colors.transparent,
@@ -59,7 +64,7 @@ class _showModelBottomSheet_favourite_ScreenState
                         "assets/songs logo.png",
                         fit: BoxFit.cover,
                       ),
-                      id: dbSongs_dataBase[index].id!,
+                    id:dbSongs_dataBase[index].id!,
                       artworkBorder: BorderRadius.circular(20.0),
                       type: ArtworkType.AUDIO),
                 ),

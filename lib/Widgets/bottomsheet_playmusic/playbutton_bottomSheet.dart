@@ -66,7 +66,7 @@ class _playButton_bottomSheetState extends State<playButton_bottomSheet> {
                 color: isPressed ? Color.fromARGB(255, 199, 196, 207) : Color.fromARGB(248, 181, 160, 223).withOpacity(0.5),
                 shape: BoxShape.circle,
               ),
-              child: Icon(isPressed?Icons.play_arrow:Icons.pause,size: 35,),
+              child: Icon(isPressed?Icons.pause:Icons.play_arrow,size: 35,),
               
                
               ),
